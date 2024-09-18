@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2/promise");
+const swaggerConfig = require("./swagger.json");
+const swaggerUI = require("swagger-ui-express");
 
 require("dotenv").config(); // para las variables de entorno
 
@@ -28,27 +30,7 @@ app.listen(port, () => {
 });
 
 // Endpoints
-
-// Obtener todos los animales
-app.get("/animales", async (req, res) => {
-  /*
-        - conecto a la DB
-        - consulta a la DB. READ (SELECT)
-        - cierro conexión a la DB
-        - responder con los animales
-    */
-
-  const connection = await getDBConnection();
-  const query = "SELECT * FROM animales";
-  const [result] = await connection.query(query);
-
-  connection.end();
-
-  res.status(200).json({
-    status: "success",
-    results: result,
-  });
-});
+app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerConfig));
 
 //obtener usuarios
 app.get("/usuarios", async (req, res) => {
@@ -61,6 +43,27 @@ app.get("/usuarios", async (req, res) => {
 
   const connection = await getDBConnection();
   const query = "SELECT * FROM usuarios";
+  const [result] = await connection.query(query);
+
+  connection.end();
+
+  res.status(200).json({
+    status: "success",
+    results: result,
+  });
+});
+
+// Obtener todos los animales
+app.get("/animales", async (req, res) => {
+  /*
+        - conecto a la DB
+        - consulta a la DB. READ (SELECT)
+        - cierro conexión a la DB
+        - responder con los animales
+    */
+
+  const connection = await getDBConnection();
+  const query = "SELECT * FROM animales";
   const [result] = await connection.query(query);
 
   connection.end();
