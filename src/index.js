@@ -12,8 +12,8 @@ const app = express();
 async function getDBConnection() {
   const connection = await mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "_121803099389$L&m",
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     database: "veterinario",
   });
   connection.connect();
