@@ -28,15 +28,3 @@ VALUES
 ('V', 'Perro', 'Mestizo', 1),  
 ('Bigotes', 'Gato', 'Siames', 2);
 
-SELECT 
-    
-    a.nombre AS animal_nombre,
-    a.especie AS animal_especie,
-    a.raza AS animal_raza,
-    
-    u.nombre AS usuario_nombre,
-    u.email AS usuario_email
-FROM 
-    animales a
-JOIN 
-    usuarios u ON a.fk_usuario = u.id;
